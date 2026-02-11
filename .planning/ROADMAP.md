@@ -29,12 +29,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. User can see all open positions listed with symbol, quantity, entry price, current price, and unrealized P&L color-coded green/red, plus aggregate P&L
   4. User can see a reverse-chronological feed of recent orders, fills, and position state changes that updates live via WebSocket
   5. User can see connection status (green/yellow/red based on data age) and bot health indicator (alive/dead with last activity timestamp)
-**Plans**: TBD
+**Plans:** 3 plans
 
 Plans:
-- [ ] 01-01: WebSocket infrastructure (Hub, Ticker, Events, Handler, WAL mode, dashboard package isolation)
-- [ ] 01-02: Frontend shell and portfolio panels (Alpine.js + Tailwind, templates, portfolio overview, positions list)
-- [ ] 01-03: Activity feed and status indicators (activity feed panel, connection status, bot health)
+- [ ] 01-01-PLAN.md -- WebSocket infrastructure (Hub, Client, Ticker, Events, Handler, WAL mode, dashboard package isolation)
+- [ ] 01-02-PLAN.md -- Frontend shell and portfolio panels (Alpine.js + Tailwind, templates, portfolio overview, positions list)
+- [ ] 01-03-PLAN.md -- Activity feed and status indicators (activity feed panel, connection status, bot health, visual verification)
 
 ### Phase 2: Emergency Controls & Live Streaming
 **Goal**: User can intervene in emergencies (close positions, cancel orders, panic-close everything) and sees true real-time price updates streaming for open positions
@@ -88,7 +88,7 @@ Phases execute in numeric order: 1 --> 2 --> 3 --> 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Core Dashboard | 0/3 | Not started | - |
+| 1. Foundation & Core Dashboard | 0/3 | Planned | - |
 | 2. Emergency Controls & Live Streaming | 0/2 | Not started | - |
 | 3. Intelligence Panels | 0/2 | Not started | - |
 | 4. History & Analytics | 0/2 | Not started | - |
