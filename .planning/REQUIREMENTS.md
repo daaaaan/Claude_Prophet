@@ -1,7 +1,7 @@
 # Requirements: Prophet Trader Dashboard
 
 **Defined:** 2026-02-11
-**Core Value:** At a glance, know exactly what's happening with your money — with the ability to intervene when needed.
+**Core Value:** At a glance, know exactly what's happening with your money -- with the ability to intervene when needed.
 
 ## v1 Requirements
 
@@ -13,7 +13,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **WS-02**: WebSocket Hub manages client connections with proper goroutine lifecycle (ping/pong, deadlines, cleanup)
 - [ ] **WS-03**: Dashboard Ticker polls existing services at configurable intervals and publishes events to Hub
 - [ ] **WS-04**: SQLite database runs in WAL mode to prevent lock contention between bot writes and dashboard reads
-- [ ] **WS-05**: Dashboard code isolated in `dashboard/` package — panic in WebSocket code cannot crash the trading bot
+- [ ] **WS-05**: Dashboard code isolated in `dashboard/` package -- panic in WebSocket code cannot crash the trading bot
 
 ### Portfolio Overview
 
@@ -35,7 +35,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Activity Feed
 
 - [ ] **ACT-01**: User can see a real-time feed of recent orders and fills in reverse chronological order
-- [ ] **ACT-02**: User can see position state changes (PENDING → ACTIVE → STOPPED_OUT etc.) in the feed
+- [ ] **ACT-02**: User can see position state changes (PENDING -> ACTIVE -> STOPPED_OUT etc.) in the feed
 - [ ] **ACT-03**: New activity items appear via WebSocket push without refresh
 
 ### Emergency Controls
@@ -61,7 +61,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Frontend Shell
 
-- [ ] **UI-01**: Dashboard served from Go backend at `/dashboard` route — no separate frontend server
+- [ ] **UI-01**: Dashboard served from Go backend at `/dashboard` route -- no separate frontend server
 - [ ] **UI-02**: Frontend built with Alpine.js for reactivity, Tailwind CSS for styling, zero build step
 - [ ] **UI-03**: Static assets embedded in Go binary for single-binary deployment
 - [ ] **UI-04**: Dashboard layout with multiple panels visible simultaneously (command center style)
@@ -84,11 +84,11 @@ Explicitly excluded. Documented to prevent scope creep.
 
 | Feature | Reason |
 |---------|--------|
-| Full charting with drawing tools | User already has TradingView — dashboard complements, doesn't replace |
-| Strategy editor / backtesting | Different product entirely — dashboard is monitoring/control layer |
+| Full charting with drawing tools | User already has TradingView -- dashboard complements, doesn't replace |
+| Strategy editor / backtesting | Different product entirely -- dashboard is monitoring/control layer |
 | Multi-user authentication | Single personal tool on private network |
-| Order entry forms | Bot handles trading — dashboard is for monitoring and emergency intervention |
-| Mobile-first responsive design | Desktop command center — mobile compromises panel density |
+| Order entry forms | Bot handles trading -- dashboard is for monitoring and emergency intervention |
+| Mobile-first responsive design | Desktop command center -- mobile compromises panel density |
 | Copy trading / social features | Single user, zero value |
 
 ## Traceability
@@ -97,47 +97,47 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| WS-01 | — | Pending |
-| WS-02 | — | Pending |
-| WS-03 | — | Pending |
-| WS-04 | — | Pending |
-| WS-05 | — | Pending |
-| PORT-01 | — | Pending |
-| PORT-02 | — | Pending |
-| PORT-03 | — | Pending |
-| PORT-04 | — | Pending |
-| PORT-05 | — | Pending |
-| PORT-06 | — | Pending |
-| PORT-07 | — | Pending |
-| RT-01 | — | Pending |
-| RT-02 | — | Pending |
-| RT-03 | — | Pending |
-| RT-04 | — | Pending |
-| ACT-01 | — | Pending |
-| ACT-02 | — | Pending |
-| ACT-03 | — | Pending |
-| EMR-01 | — | Pending |
-| EMR-02 | — | Pending |
-| EMR-03 | — | Pending |
-| EMR-04 | — | Pending |
-| INT-01 | — | Pending |
-| INT-02 | — | Pending |
-| INT-03 | — | Pending |
-| INT-04 | — | Pending |
-| HIST-01 | — | Pending |
-| HIST-02 | — | Pending |
-| HIST-03 | — | Pending |
-| HIST-04 | — | Pending |
-| UI-01 | — | Pending |
-| UI-02 | — | Pending |
-| UI-03 | — | Pending |
-| UI-04 | — | Pending |
+| WS-01 | Phase 1 | Pending |
+| WS-02 | Phase 1 | Pending |
+| WS-03 | Phase 1 | Pending |
+| WS-04 | Phase 1 | Pending |
+| WS-05 | Phase 1 | Pending |
+| PORT-01 | Phase 1 | Pending |
+| PORT-02 | Phase 1 | Pending |
+| PORT-03 | Phase 1 | Pending |
+| PORT-04 | Phase 2 | Pending |
+| PORT-05 | Phase 2 | Pending |
+| PORT-06 | Phase 2 | Pending |
+| PORT-07 | Phase 3 | Pending |
+| RT-01 | Phase 1 | Pending |
+| RT-02 | Phase 2 | Pending |
+| RT-03 | Phase 1 | Pending |
+| RT-04 | Phase 1 | Pending |
+| ACT-01 | Phase 1 | Pending |
+| ACT-02 | Phase 1 | Pending |
+| ACT-03 | Phase 1 | Pending |
+| EMR-01 | Phase 2 | Pending |
+| EMR-02 | Phase 2 | Pending |
+| EMR-03 | Phase 2 | Pending |
+| EMR-04 | Phase 2 | Pending |
+| INT-01 | Phase 3 | Pending |
+| INT-02 | Phase 3 | Pending |
+| INT-03 | Phase 3 | Pending |
+| INT-04 | Phase 3 | Pending |
+| HIST-01 | Phase 4 | Pending |
+| HIST-02 | Phase 4 | Pending |
+| HIST-03 | Phase 4 | Pending |
+| HIST-04 | Phase 4 | Pending |
+| UI-01 | Phase 1 | Pending |
+| UI-02 | Phase 1 | Pending |
+| UI-03 | Phase 1 | Pending |
+| UI-04 | Phase 1 | Pending |
 
 **Coverage:**
 - v1 requirements: 35 total
-- Mapped to phases: 0
-- Unmapped: 35 ⚠️
+- Mapped to phases: 35
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-02-11*
-*Last updated: 2026-02-11 after initial definition*
+*Last updated: 2026-02-11 after roadmap creation*
