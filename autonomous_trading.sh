@@ -14,13 +14,14 @@ NC='\033[0m' # No Color
 
 # Configuration
 MAX_BUDGET_USD="${MAX_BUDGET_USD:-5.00}"
-STOP_TIME="${STOP_TIME:-16:01}"
+STOP_TIME="${STOP_TIME:-16:01}"  # In US Eastern time
+MARKET_TZ="America/New_York"
 
 echo -e "${BLUE}========================================${NC}"
 echo -e "${BLUE}  Prophet Autonomous Trading System${NC}"
 echo -e "${BLUE}========================================${NC}"
 echo ""
-echo -e "  Stop time:  ${STOP_TIME}"
+echo -e "  Stop time:  ${STOP_TIME} ET"
 echo -e "  Budget cap: \$${MAX_BUDGET_USD} per session"
 echo ""
 
@@ -72,7 +73,7 @@ TOTAL_COST=0
 
 while true; do
     # Check if past stop time
-    NOW=$(date +%H:%M)
+    NOW=$(TZ="$MARKET_TZ" date +%H:%M)
     if [[ "$NOW" > "$STOP_TIME" || "$NOW" == "$STOP_TIME" ]]; then
         echo -e "${GREEN}Market close time reached ($STOP_TIME). Stopping.${NC}"
         break
@@ -95,7 +96,7 @@ while true; do
     if [ -n "$SESSION_ID" ]; then
         # Continue from previous session so Claude has context
         CLAUDE_ARGS+=(--resume "$SESSION_ID")
-        CLAUDE_ARGS+=("Continue trading. Current time is $(date '+%H:%M %Z'). Keep going until $STOP_TIME.")
+        CLAUDE_ARGS+=("Continue trading. Current time is $(TZ="$MARKET_TZ" date '+%H:%M %Z'). Keep going until $STOP_TIME ET.")
     else
         CLAUDE_ARGS+=("$(cat autonomous_trading_prompt.txt)")
     fi
