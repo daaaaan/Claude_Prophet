@@ -14,12 +14,24 @@
     <header class="bg-gray-900 border-b border-gray-800 px-4 py-3 flex items-center justify-between">
         <h1 class="text-xl font-bold tracking-tight">Prophet Trader</h1>
         <div class="flex items-center gap-4">
-            <!-- Bot Health Placeholder -->
-            <span class="text-sm text-gray-400">Bot: --</span>
+            <!-- Bot Health Indicator -->
+            <div class="flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full"
+                     :class="$store.dashboard.botHealth.alive ? 'bg-green-500' : 'bg-red-500'"></div>
+                <span class="text-sm"
+                      :class="$store.dashboard.botHealth.alive ? 'text-green-400' : 'text-red-400'"
+                      x-text="$store.dashboard.botHealth.alive ? 'Bot: Alive' : 'Bot: Dead'">Bot: --</span>
+                <template x-if="$store.dashboard.botHealth.alive">
+                    <span class="text-xs text-gray-500" x-text="$store.dashboard.botHealth.uptime"></span>
+                </template>
+                <template x-if="$store.dashboard.botHealth.last_activity">
+                    <span class="text-xs text-gray-600" x-text="$store.dashboard.formatTimeAgo($store.dashboard.botHealth.last_activity)"></span>
+                </template>
+            </div>
             <!-- Connection Status -->
             <div class="flex items-center gap-2">
                 <div class="w-2.5 h-2.5 rounded-full"
-                     :class="$store.dashboard.connectionStatus === 'live' ? 'bg-green-500' :
+                     :class="$store.dashboard.connectionStatus === 'live' ? 'bg-green-500 animate-pulse' :
                              $store.dashboard.connectionStatus === 'stale' ? 'bg-yellow-500' : 'bg-red-500'">
                 </div>
                 <span class="text-sm"
@@ -29,6 +41,10 @@
                               $store.dashboard.connectionStatus === 'stale' ? 'Stale' : 'Disconnected'">
                     Disconnected
                 </span>
+                <template x-if="$store.dashboard.lastUpdate">
+                    <span class="text-xs text-gray-500"
+                          x-text="'(' + Math.floor((Date.now() - $store.dashboard.lastUpdate.getTime()) / 1000) + 's)'"></span>
+                </template>
             </div>
         </div>
     </header>
@@ -121,10 +137,90 @@
             </template>
         </div>
 
-        <!-- Activity Feed Placeholder -->
-        <div class="bg-gray-900 rounded-lg p-4 lg:col-span-3">
-            <h2 class="text-lg font-semibold text-gray-200 mb-4">Activity Feed</h2>
-            <p class="text-gray-500 text-sm">Loading...</p>
+        <!-- Activity Feed Panel -->
+        <div class="bg-gray-900 rounded-lg p-4 lg:col-span-2">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-semibold text-gray-200">Activity Feed</h2>
+                <span class="bg-gray-800 text-gray-300 text-xs font-mono px-2 py-1 rounded"
+                      x-text="$store.dashboard.activities.length">0</span>
+            </div>
+
+            <!-- Empty State -->
+            <template x-if="$store.dashboard.activities.length === 0">
+                <div class="text-center py-8">
+                    <p class="text-gray-500">No recent activity</p>
+                </div>
+            </template>
+
+            <!-- Activity Items -->
+            <div class="max-h-96 overflow-y-auto space-y-2">
+                <template x-for="item in $store.dashboard.activities" :key="item.timestamp + item.action">
+                    <div class="flex items-start gap-3 p-2 rounded bg-gray-800/50 hover:bg-gray-800 transition-colors">
+                        <!-- Icon -->
+                        <span class="text-lg mt-0.5" :class="$store.dashboard.activityColor(item.type)"
+                              x-text="$store.dashboard.activityIcon(item.type)"></span>
+                        <!-- Content -->
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2">
+                                <span class="text-sm" :class="$store.dashboard.activityColor(item.type)"
+                                      x-text="item.action"></span>
+                                <template x-if="item.symbol">
+                                    <span class="text-xs font-mono text-gray-300 bg-gray-700 px-1.5 py-0.5 rounded"
+                                          x-text="item.symbol"></span>
+                                </template>
+                                <span class="text-xs uppercase tracking-wider text-gray-600"
+                                      x-text="item.type"></span>
+                            </div>
+                            <template x-if="item.reasoning">
+                                <p class="text-xs text-gray-500 mt-1 truncate" x-text="item.reasoning"></p>
+                            </template>
+                        </div>
+                        <!-- Timestamp -->
+                        <span class="text-xs text-gray-600 whitespace-nowrap"
+                              x-text="$store.dashboard.formatTimeAgo(item.timestamp)"></span>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- Status Panel (Managed Positions + Info) -->
+        <div class="bg-gray-900 rounded-lg p-4">
+            <h2 class="text-lg font-semibold text-gray-200 mb-4">Managed Positions</h2>
+
+            <!-- Empty State -->
+            <template x-if="$store.dashboard.managedPositions.length === 0">
+                <div class="text-center py-4">
+                    <p class="text-gray-500 text-sm">No managed positions</p>
+                </div>
+            </template>
+
+            <!-- Managed Position Items -->
+            <template x-if="$store.dashboard.managedPositions.length > 0">
+                <div class="space-y-2">
+                    <template x-for="pos in $store.dashboard.managedPositions" :key="pos.position_id">
+                        <div class="p-2 rounded bg-gray-800/50 border border-gray-700/50">
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="font-mono font-semibold text-sm text-white" x-text="pos.symbol"></span>
+                                <span class="text-xs px-2 py-0.5 rounded-full font-medium"
+                                      :class="{
+                                          'bg-green-500/20 text-green-400': pos.status === 'ACTIVE',
+                                          'bg-yellow-500/20 text-yellow-400': pos.status === 'PENDING',
+                                          'bg-red-500/20 text-red-400': pos.status === 'STOPPED_OUT',
+                                          'bg-gray-500/20 text-gray-400': pos.status === 'CLOSED',
+                                          'bg-blue-500/20 text-blue-400': pos.status === 'PARTIAL'
+                                      }"
+                                      x-text="pos.status"></span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-1 text-xs">
+                                <div class="text-gray-500">Entry: <span class="text-gray-300 font-mono" x-text="$store.dashboard.formatMoney(pos.entry_price)"></span></div>
+                                <div class="text-gray-500">SL: <span class="text-red-400 font-mono" x-text="$store.dashboard.formatMoney(pos.stop_loss)"></span></div>
+                                <div class="text-gray-500">TP: <span class="text-green-400 font-mono" x-text="$store.dashboard.formatMoney(pos.take_profit)"></span></div>
+                                <div class="text-gray-500">P&L: <span class="font-mono" :class="pos.unrealized_pl >= 0 ? 'text-green-400' : 'text-red-400'" x-text="$store.dashboard.formatPL(pos.unrealized_pl)"></span></div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+            </template>
         </div>
 
     </main>

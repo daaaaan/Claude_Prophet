@@ -3,6 +3,7 @@ package dashboard
 import (
 	"context"
 	"encoding/json"
+	"prophet-trader/database"
 	"prophet-trader/interfaces"
 	"prophet-trader/services"
 	"time"
@@ -13,19 +14,21 @@ import (
 // Ticker periodically polls existing services and broadcasts JSON snapshots
 // to connected WebSocket clients via the Hub.
 type Ticker struct {
-	hub             *Hub
-	tradingService  interfaces.TradingService
-	activityLogger  *services.ActivityLogger
-	interval        time.Duration
-	startTime       time.Time
+	hub            *Hub
+	tradingService interfaces.TradingService
+	activityLogger *services.ActivityLogger
+	storage        *database.LocalStorage
+	interval       time.Duration
+	startTime      time.Time
 }
 
 // NewTicker creates a new Ticker that will poll at the given interval.
-func NewTicker(hub *Hub, tradingService interfaces.TradingService, activityLogger *services.ActivityLogger, interval time.Duration) *Ticker {
+func NewTicker(hub *Hub, tradingService interfaces.TradingService, activityLogger *services.ActivityLogger, storage *database.LocalStorage, interval time.Duration) *Ticker {
 	return &Ticker{
 		hub:            hub,
 		tradingService: tradingService,
 		activityLogger: activityLogger,
+		storage:        storage,
 		interval:       interval,
 		startTime:      time.Now(),
 	}
@@ -118,6 +121,7 @@ func (t *Ticker) publishSnapshot(ctx context.Context) {
 				Action:    src.Action,
 				Symbol:    src.Symbol,
 				Details:   src.Details,
+				Reasoning: src.Reasoning,
 			}
 		}
 		snapshot.Activity = items
@@ -128,6 +132,29 @@ func (t *Ticker) publishSnapshot(ctx context.Context) {
 		Alive:        botAlive,
 		LastActivity: time.Now(),
 		Uptime:       time.Since(t.startTime).Round(time.Second).String(),
+	}
+
+	// Fetch managed positions
+	if t.storage != nil {
+		if dbPositions, err := t.storage.GetAllManagedPositions(""); err != nil {
+			log.Debugf("Dashboard ticker: failed to get managed positions: %v", err)
+		} else {
+			managed := make([]*ManagedPositionData, len(dbPositions))
+			for i, p := range dbPositions {
+				managed[i] = &ManagedPositionData{
+					PositionID:   p.PositionID,
+					Symbol:       p.Symbol,
+					Status:       p.Status,
+					Side:         p.Side,
+					EntryPrice:   p.EntryPrice,
+					StopLoss:     p.StopLossPrice,
+					TakeProfit:   p.TakeProfitPrice,
+					UnrealizedPL: p.UnrealizedPL,
+					CreatedAt:    p.CreatedAt,
+				}
+			}
+			snapshot.ManagedPositions = managed
+		}
 	}
 
 	// Marshal and broadcast

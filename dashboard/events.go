@@ -4,12 +4,26 @@ import "time"
 
 // DashboardSnapshot is the top-level JSON payload sent to WebSocket clients.
 type DashboardSnapshot struct {
-	Type      string          `json:"type"`
-	Timestamp time.Time       `json:"timestamp"`
-	Account   *AccountData    `json:"account,omitempty"`
-	Positions []*PositionData `json:"positions,omitempty"`
-	Activity  []ActivityItem  `json:"activity,omitempty"`
-	BotHealth *BotHealthData  `json:"bot_health,omitempty"`
+	Type             string                 `json:"type"`
+	Timestamp        time.Time              `json:"timestamp"`
+	Account          *AccountData           `json:"account,omitempty"`
+	Positions        []*PositionData        `json:"positions,omitempty"`
+	Activity         []ActivityItem         `json:"activity,omitempty"`
+	BotHealth        *BotHealthData         `json:"bot_health,omitempty"`
+	ManagedPositions []*ManagedPositionData `json:"managed_positions,omitempty"`
+}
+
+// ManagedPositionData represents a managed position with risk management state.
+type ManagedPositionData struct {
+	PositionID   string    `json:"position_id"`
+	Symbol       string    `json:"symbol"`
+	Status       string    `json:"status"`
+	Side         string    `json:"side"`
+	EntryPrice   float64   `json:"entry_price"`
+	StopLoss     float64   `json:"stop_loss"`
+	TakeProfit   float64   `json:"take_profit"`
+	UnrealizedPL float64   `json:"unrealized_pl"`
+	CreatedAt    time.Time `json:"created_at"`
 }
 
 // AccountData represents the trading account state.
@@ -38,6 +52,7 @@ type ActivityItem struct {
 	Action    string                 `json:"action"`
 	Symbol    string                 `json:"symbol,omitempty"`
 	Details   map[string]interface{} `json:"details,omitempty"`
+	Reasoning string                 `json:"reasoning,omitempty"`
 }
 
 // BotHealthData represents the bot's operational health status.

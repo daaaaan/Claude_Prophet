@@ -4,6 +4,7 @@ document.addEventListener('alpine:init', () => {
         account: { cash: 0, equity: 0, buying_power: 0 },
         positions: [],
         activities: [],
+        managedPositions: [],
         botHealth: { alive: false, last_activity: null, uptime: '' },
 
         // Connection state
@@ -47,6 +48,7 @@ document.addEventListener('alpine:init', () => {
                     if (data.positions) this.positions = data.positions;
                     if (data.activity) this.activities = data.activity;
                     if (data.bot_health) this.botHealth = data.bot_health;
+                    if (data.managed_positions) this.managedPositions = data.managed_positions;
                 }
             };
 
@@ -79,6 +81,37 @@ document.addEventListener('alpine:init', () => {
         formatPct(value) {
             if (value == null) return '0.00%';
             return (value >= 0 ? '+' : '') + value.toFixed(2) + '%';
+        },
+
+        formatTimeAgo(timestamp) {
+            if (!timestamp) return '';
+            const diff = (Date.now() - Date.parse(timestamp)) / 1000;
+            if (diff < 60) return Math.floor(diff) + 's ago';
+            if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+            if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+            return Math.floor(diff / 86400) + 'd ago';
+        },
+
+        activityIcon(type) {
+            const icons = {
+                'POSITION_OPENED': '\u2197',
+                'POSITION_CLOSED': '\u2198',
+                'ANALYSIS': '\u2315',
+                'INTELLIGENCE': '\u2605',
+                'DECISION': '\u2302'
+            };
+            return icons[type] || '\u2022';
+        },
+
+        activityColor(type) {
+            const colors = {
+                'POSITION_OPENED': 'text-green-400',
+                'POSITION_CLOSED': 'text-red-400',
+                'ANALYSIS': 'text-blue-400',
+                'INTELLIGENCE': 'text-purple-400',
+                'DECISION': 'text-yellow-400'
+            };
+            return colors[type] || 'text-gray-400';
         }
     });
 });

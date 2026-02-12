@@ -121,7 +121,7 @@ func main() {
 	hub := dashboard.NewHub()
 	go hub.Run()
 
-	ticker := dashboard.NewTicker(hub, tradingService, activityLogger, time.Duration(cfg.DashboardPollInterval)*time.Second)
+	ticker := dashboard.NewTicker(hub, tradingService, activityLogger, storageService, time.Duration(cfg.DashboardPollInterval)*time.Second)
 	go ticker.Run(ctx)
 
 	logger.Info("Dashboard WebSocket infrastructure started")
