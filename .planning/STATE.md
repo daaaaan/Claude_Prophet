@@ -10,28 +10,28 @@ See: .planning/PROJECT.md (updated 2026-02-11)
 ## Current Position
 
 Phase: 1 of 4 (Foundation & Core Dashboard)
-Plan: 1 of 3 in current phase
+Plan: 2 of 3 in current phase
 Status: Executing
-Last activity: 2026-02-12 -- Completed 01-01 WebSocket Infrastructure
+Last activity: 2026-02-12 -- Completed 01-02 Dashboard Frontend
 
-Progress: [███░░░░░░░] 33%
+Progress: [██████░░░░] 67%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 1
-- Average duration: 3min
-- Total execution time: 0.05 hours
+- Total plans completed: 2
+- Average duration: 2.5min
+- Total execution time: 0.08 hours
 
 **By Phase:**
 
 | Phase | Plans | Total | Avg/Plan |
 |-------|-------|-------|----------|
-| 01-foundation-core-dashboard | 1/3 | 3min | 3min |
+| 01-foundation-core-dashboard | 2/3 | 5min | 2.5min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (3min)
-- Trend: Starting
+- Last 5 plans: 01-01 (3min), 01-02 (2min)
+- Trend: Accelerating
 
 *Updated after each plan completion*
 
@@ -48,6 +48,10 @@ Recent decisions affecting current work:
 - [01-01]: Panic recovery on Hub.Run() and Ticker.Run() for process isolation (WS-05)
 - [01-01]: SQLite WAL mode via DSN query parameter for concurrent read/write support
 - [01-01]: Partial snapshots sent on individual poll failures rather than dropping entire snapshot
+- [01-02]: Alpine.js store pattern for global reactive state -- single $store.dashboard accessed throughout template
+- [01-02]: Tailwind CSS v4 standalone CLI in tools/ (gitignored) avoids Node.js dependency
+- [01-02]: Static ternary class bindings only -- no dynamic Tailwind class construction
+- [01-02]: Connection status three-tier: live (<5s), stale (<30s), disconnected (>30s or no connection)
 
 ### Pending Todos
 
@@ -56,11 +60,11 @@ None yet.
 ### Blockers/Concerns
 
 - [Research]: Alpaca streaming SDK (`StreamBars()` stub) behavior under reconnection/auth failure needs live testing in Phase 2.
-- [Research]: Tailwind CSS v4 standalone CLI content scanning with Go template files may need `@source` directive adjustment.
+- [Resolved in 01-02]: Tailwind CSS v4 standalone CLI works with `@source` directives scanning HTML templates and JS files.
 - [Resolved in 01-01]: `go:embed` chosen for static file serving -- embedded at compile time, no filesystem toggle needed.
 
 ## Session Continuity
 
 Last session: 2026-02-12
-Stopped at: Completed 01-01-PLAN.md
+Stopped at: Completed 01-02-PLAN.md
 Resume file: None
