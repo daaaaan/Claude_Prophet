@@ -10,7 +10,7 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
-//go:embed static/templates/*.html static/css/*.css
+//go:embed static/templates/*.html static/css/*.css static/js/*.js
 var embeddedFiles embed.FS
 
 // Register sets up dashboard routes on the provided gin router.

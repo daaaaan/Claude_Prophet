@@ -32,5 +32,8 @@ main
 data/*.db
 data/*.db-*
 
+# Tools (binaries)
+tools/
+
 # Node
 node_modules/

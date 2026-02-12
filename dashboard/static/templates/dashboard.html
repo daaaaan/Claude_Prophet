@@ -4,9 +4,130 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prophet Trader Dashboard</title>
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="/dashboard/static/css/output.css">
+    <script src="/dashboard/static/js/app.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
 </head>
-<body>
-    <div id="app">Dashboard loading...</div>
+<body class="bg-gray-950 text-gray-100 min-h-screen">
+
+    <!-- Header -->
+    <header class="bg-gray-900 border-b border-gray-800 px-4 py-3 flex items-center justify-between">
+        <h1 class="text-xl font-bold tracking-tight">Prophet Trader</h1>
+        <div class="flex items-center gap-4">
+            <!-- Bot Health Placeholder -->
+            <span class="text-sm text-gray-400">Bot: --</span>
+            <!-- Connection Status -->
+            <div class="flex items-center gap-2">
+                <div class="w-2.5 h-2.5 rounded-full"
+                     :class="$store.dashboard.connectionStatus === 'live' ? 'bg-green-500' :
+                             $store.dashboard.connectionStatus === 'stale' ? 'bg-yellow-500' : 'bg-red-500'">
+                </div>
+                <span class="text-sm"
+                      :class="$store.dashboard.connectionStatus === 'live' ? 'text-green-400' :
+                              $store.dashboard.connectionStatus === 'stale' ? 'text-yellow-400' : 'text-red-400'"
+                      x-text="$store.dashboard.connectionStatus === 'live' ? 'Live' :
+                              $store.dashboard.connectionStatus === 'stale' ? 'Stale' : 'Disconnected'">
+                    Disconnected
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="grid grid-cols-1 lg:grid-cols-3 gap-4 p-4">
+
+        <!-- Portfolio Overview Panel -->
+        <div class="bg-gray-900 rounded-lg p-4">
+            <h2 class="text-lg font-semibold text-gray-200 mb-4">Portfolio Overview</h2>
+
+            <div class="space-y-3">
+                <!-- Cash -->
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-400">Cash</span>
+                    <span class="text-white font-mono"
+                          x-text="$store.dashboard.formatMoney($store.dashboard.account.cash)">$0.00</span>
+                </div>
+                <!-- Equity -->
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-400">Equity</span>
+                    <span class="text-white font-mono"
+                          x-text="$store.dashboard.formatMoney($store.dashboard.account.equity)">$0.00</span>
+                </div>
+                <!-- Buying Power -->
+                <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-400">Buying Power</span>
+                    <span class="text-white font-mono"
+                          x-text="$store.dashboard.formatMoney($store.dashboard.account.buying_power)">$0.00</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Open Positions Panel -->
+        <div class="bg-gray-900 rounded-lg p-4 lg:col-span-2">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-lg font-semibold text-gray-200">Open Positions</h2>
+                <span class="bg-gray-800 text-gray-300 text-xs font-mono px-2 py-1 rounded"
+                      x-text="$store.dashboard.positions.length">0</span>
+            </div>
+
+            <!-- Empty State -->
+            <template x-if="$store.dashboard.positions.length === 0">
+                <div class="text-center py-8">
+                    <p class="text-gray-500">No open positions</p>
+                </div>
+            </template>
+
+            <!-- Positions Table Header -->
+            <template x-if="$store.dashboard.positions.length > 0">
+                <div>
+                    <div class="grid grid-cols-6 gap-2 text-xs text-gray-500 uppercase tracking-wider pb-2 border-b border-gray-800">
+                        <div>Symbol</div>
+                        <div class="text-right">Qty</div>
+                        <div class="text-right">Entry</div>
+                        <div class="text-right">Current</div>
+                        <div class="text-right">P&L</div>
+                        <div class="text-right">P&L %</div>
+                    </div>
+
+                    <!-- Positions List -->
+                    <template x-for="pos in $store.dashboard.positions" :key="pos.symbol">
+                        <div class="grid grid-cols-6 gap-2 py-2 border-b border-gray-800/50 text-sm">
+                            <div class="font-mono font-semibold text-white" x-text="pos.symbol"></div>
+                            <div class="text-right text-gray-400">
+                                <span x-text="pos.qty"></span>
+                                <span class="text-xs"> shares</span>
+                            </div>
+                            <div class="text-right text-gray-400 font-mono"
+                                 x-text="$store.dashboard.formatMoney(pos.entry_price)"></div>
+                            <div class="text-right text-gray-300 font-mono"
+                                 x-text="$store.dashboard.formatMoney(pos.current_price)"></div>
+                            <div class="text-right font-mono"
+                                 :class="pos.unrealized_pl >= 0 ? 'text-green-400' : 'text-red-400'"
+                                 x-text="$store.dashboard.formatPL(pos.unrealized_pl)"></div>
+                            <div class="text-right font-mono"
+                                 :class="pos.unrealized_pl_pct >= 0 ? 'text-green-400' : 'text-red-400'"
+                                 x-text="$store.dashboard.formatPct(pos.unrealized_pl_pct)"></div>
+                        </div>
+                    </template>
+
+                    <!-- Aggregate P&L Footer -->
+                    <div class="flex items-center justify-between pt-3 mt-1 border-t border-gray-700">
+                        <span class="text-sm font-semibold text-gray-300">Total P&L</span>
+                        <span class="font-mono font-semibold"
+                              :class="$store.dashboard.totalUnrealizedPL >= 0 ? 'text-green-400' : 'text-red-400'"
+                              x-text="$store.dashboard.formatPL($store.dashboard.totalUnrealizedPL)">$0.00</span>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <!-- Activity Feed Placeholder -->
+        <div class="bg-gray-900 rounded-lg p-4 lg:col-span-3">
+            <h2 class="text-lg font-semibold text-gray-200 mb-4">Activity Feed</h2>
+            <p class="text-gray-500 text-sm">Loading...</p>
+        </div>
+
+    </main>
+
 </body>
 </html>
