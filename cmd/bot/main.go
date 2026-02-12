@@ -7,6 +7,7 @@ import (
 	"os/signal"
 	"prophet-trader/config"
 	"prophet-trader/controllers"
+	"prophet-trader/dashboard"
 	"prophet-trader/database"
 	"prophet-trader/interfaces"
 	"prophet-trader/services"
@@ -116,8 +117,17 @@ func main() {
 		logger.Info("Activity logging session started")
 	}
 
+	// Initialize dashboard WebSocket infrastructure
+	hub := dashboard.NewHub()
+	go hub.Run()
+
+	ticker := dashboard.NewTicker(hub, tradingService, activityLogger, time.Duration(cfg.DashboardPollInterval)*time.Second)
+	go ticker.Run(ctx)
+
+	logger.Info("Dashboard WebSocket infrastructure started")
+
 	// Setup HTTP server
-	router := setupRouter(orderController, newsController, intelligenceController, positionController, activityController)
+	router := setupRouter(orderController, newsController, intelligenceController, positionController, activityController, hub)
 
 	// Start data cleanup routine
 	go startDataCleanup(ctx, storageService, cfg.DataRetentionDays, logger)
@@ -147,7 +157,7 @@ func main() {
 	}
 }
 
-func setupRouter(orderController *controllers.OrderController, newsController *controllers.NewsController, intelligenceController *controllers.IntelligenceController, positionController *controllers.PositionManagementController, activityController *controllers.ActivityController) *gin.Engine {
+func setupRouter(orderController *controllers.OrderController, newsController *controllers.NewsController, intelligenceController *controllers.IntelligenceController, positionController *controllers.PositionManagementController, activityController *controllers.ActivityController, hub *dashboard.Hub) *gin.Engine {
 	router := gin.Default()
 
 	// Enable CORS
@@ -225,8 +235,8 @@ func setupRouter(orderController *controllers.OrderController, newsController *c
 		api.POST("/activity/log", activityController.HandleLogActivity)
 	}
 
-	// Serve dashboard
-	router.Static("/dashboard", "./web")
+	// Register dashboard routes (WebSocket, static assets, template serving)
+	dashboard.Register(router, hub)
 
 	return router
 }

@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"os"
+	"strconv"
 
 	"github.com/joho/godotenv"
 )
@@ -17,7 +18,8 @@ type Config struct {
 	ServerPort        string
 	EnableLogging     bool
 	LogLevel          string
-	DataRetentionDays int
+	DataRetentionDays      int
+	DashboardPollInterval  int
 }
 
 var AppConfig *Config
@@ -38,10 +40,20 @@ func Load() error {
 		ServerPort:        getEnvOrDefault("SERVER_PORT", "4534"),
 		EnableLogging:     getEnvOrDefault("ENABLE_LOGGING", "true") == "true",
 		LogLevel:          getEnvOrDefault("LOG_LEVEL", "info"),
-		DataRetentionDays: 90,
+		DataRetentionDays:     90,
+		DashboardPollInterval: getEnvIntOrDefault("DASHBOARD_POLL_INTERVAL", 2),
 	}
 
 	return nil
+}
+
+func getEnvIntOrDefault(key string, defaultValue int) int {
+	if value := os.Getenv(key); value != "" {
+		if intVal, err := strconv.Atoi(value); err == nil {
+			return intVal
+		}
+	}
+	return defaultValue
 }
 
 func getEnvOrDefault(key, defaultValue string) string {

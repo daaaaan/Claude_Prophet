@@ -28,8 +28,10 @@ func NewLocalStorage(dbPath string) (*LocalStorage, error) {
 		return nil, fmt.Errorf("failed to create database directory: %w", err)
 	}
 
-	// Open SQLite database
-	db, err := gorm.Open(sqlite.Open(dbPath), &gorm.Config{
+	// Open SQLite database with WAL mode to prevent lock contention
+	// between bot writes and dashboard reads (WS-04).
+	dsn := fmt.Sprintf("file:%s?_journal_mode=WAL", dbPath)
+	db, err := gorm.Open(sqlite.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Silent),
 	})
 	if err != nil {
