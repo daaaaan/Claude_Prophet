@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-02-11T16:53:08.739Z",
+  "action": "BUY",
+  "symbol": "TSLA",
+  "reasoning": "TSLA in strong V-bounce: 387 low (Feb 5) to 425 today (+9.8%). 4 consecutive green daily candles with increasing closes. Momentum thesis: recovery toward Jan 26 levels of 445. Apr 17 $430C at delta 0.53, 65 DTE, 1.6% spread. 3 contracts at ~$31.20 = $9,360 (9.4% of portfolio). Stop at -15% ($26.52). Profit target +25% ($39.00). After this trade, portfolio will be 73% cash — still within rules.",
+  "market_data": {
+    "tsla_price": 424.87,
+    "tsla_5day_low": 387.53,
+    "tsla_jan_high": 445,
+    "option": "TSLA260417C00430000",
+    "bid": 30.96,
+    "ask": 31.45,
+    "delta": 0.53,
+    "iv": 0.453,
+    "dte": 65,
+    "spread_pct": "1.6%",
+    "position_size_pct": "9.4%"
+  }
+}

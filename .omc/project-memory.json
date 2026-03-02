@@ -1,0 +1,473 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1770822889659,
+  "projectRoot": "/home/dan/Coding/claude-prophet",
+  "techStack": {
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      },
+      {
+        "name": "Go",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "go.mod"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "express",
+        "version": "5.1.0",
+        "category": "backend"
+      }
+    ],
+    "packageManager": "go",
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": "npm test",
+    "lintCommand": null,
+    "devCommand": "npm run start",
+    "scripts": {
+      "start": "node mcp-server.js",
+      "test": "echo \"Error: no test specified\" && exit 1"
+    }
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "activity_logs": {
+      "path": "activity_logs",
+      "purpose": null,
+      "fileCount": 6,
+      "lastAccessed": 1770822889645,
+      "keyFiles": [
+        "activity_2025-11-17.json",
+        "activity_2025-11-18.json",
+        "activity_2025-11-19.json",
+        "activity_2025-11-20.json",
+        "activity_2025-11-26.json"
+      ]
+    },
+    "cmd": {
+      "path": "cmd",
+      "purpose": null,
+      "fileCount": 0,
+      "lastAccessed": 1770822889646,
+      "keyFiles": []
+    },
+    "config": {
+      "path": "config",
+      "purpose": "Configuration files",
+      "fileCount": 1,
+      "lastAccessed": 1770822889655,
+      "keyFiles": [
+        "config.go"
+      ]
+    },
+    "controllers": {
+      "path": "controllers",
+      "purpose": "Controllers",
+      "fileCount": 5,
+      "lastAccessed": 1770822889657,
+      "keyFiles": [
+        "activity_controller.go",
+        "intelligence_controller.go",
+        "news_controller.go",
+        "order_controller.go",
+        "position_controller.go"
+      ]
+    },
+    "database": {
+      "path": "database",
+      "purpose": null,
+      "fileCount": 1,
+      "lastAccessed": 1770822889657,
+      "keyFiles": [
+        "storage.go"
+      ]
+    },
+    "decisive_actions": {
+      "path": "decisive_actions",
+      "purpose": null,
+      "fileCount": 154,
+      "lastAccessed": 1770822889658,
+      "keyFiles": [
+        "2025-11-20T05-49-09-915Z_STRATEGIC_PLAN.json",
+        "2025-11-20T05-55-33-462Z_STRATEGIC_ASSESSMENT.json",
+        "2025-11-20T05-57-14-969Z_ASSESSMENT.json",
+        "2025-11-20T06-00-31-335Z_STRATEGIC_PLAN_MODIFIED_NVDA.json",
+        "2025-11-20T14-34-01-857Z_VETO_NVDA.json"
+      ]
+    },
+    "interfaces": {
+      "path": "interfaces",
+      "purpose": null,
+      "fileCount": 2,
+      "lastAccessed": 1770822889658,
+      "keyFiles": [
+        "options.go",
+        "trading.go"
+      ]
+    },
+    "models": {
+      "path": "models",
+      "purpose": "Data models",
+      "fileCount": 1,
+      "lastAccessed": 1770822889658,
+      "keyFiles": [
+        "models.go"
+      ]
+    },
+    "seed_data": {
+      "path": "seed_data",
+      "purpose": null,
+      "fileCount": 4,
+      "lastAccessed": 1770822889658,
+      "keyFiles": [
+        "load_seed_data.js",
+        "ticker_universe.json",
+        "trade_knowledge_base.json",
+        "trading_principles.json"
+      ]
+    },
+    "services": {
+      "path": "services",
+      "purpose": "Business logic services",
+      "fileCount": 9,
+      "lastAccessed": 1770822889658,
+      "keyFiles": [
+        "activity_logger.go",
+        "alpaca_data.go",
+        "alpaca_options_data.go",
+        "alpaca_trading.go",
+        "gemini_service.go"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "",
+      "accessCount": 22,
+      "lastAccessed": 1770907386689,
+      "type": "directory"
+    },
+    {
+      "path": "cmd/bot/main.go",
+      "accessCount": 17,
+      "lastAccessed": 1770907442139,
+      "type": "file"
+    },
+    {
+      "path": "config/config.go",
+      "accessCount": 14,
+      "lastAccessed": 1770906921763,
+      "type": "file"
+    },
+    {
+      "path": "mcp-server.js",
+      "accessCount": 12,
+      "lastAccessed": 1770827758358,
+      "type": "file"
+    },
+    {
+      "path": "database/storage.go",
+      "accessCount": 12,
+      "lastAccessed": 1770907394938,
+      "type": "file"
+    },
+    {
+      "path": "go.mod",
+      "accessCount": 10,
+      "lastAccessed": 1770906990220,
+      "type": "file"
+    },
+    {
+      "path": "autonomous_trading.sh",
+      "accessCount": 9,
+      "lastAccessed": 1770828519189,
+      "type": "file"
+    },
+    {
+      "path": "models/models.go",
+      "accessCount": 9,
+      "lastAccessed": 1770907382160,
+      "type": "file"
+    },
+    {
+      "path": "TRADING_RULES.md",
+      "accessCount": 8,
+      "lastAccessed": 1770828549101,
+      "type": "file"
+    },
+    {
+      "path": "interfaces/trading.go",
+      "accessCount": 7,
+      "lastAccessed": 1770906783301,
+      "type": "file"
+    },
+    {
+      "path": "package.json",
+      "accessCount": 6,
+      "lastAccessed": 1770828382284,
+      "type": "file"
+    },
+    {
+      "path": "controllers/order_controller.go",
+      "accessCount": 6,
+      "lastAccessed": 1770828414975,
+      "type": "file"
+    },
+    {
+      "path": "services/alpaca_trading.go",
+      "accessCount": 6,
+      "lastAccessed": 1770829947283,
+      "type": "file"
+    },
+    {
+      "path": ".planning/config.json",
+      "accessCount": 5,
+      "lastAccessed": 1770907374269,
+      "type": "file"
+    },
+    {
+      "path": "services/activity_logger.go",
+      "accessCount": 5,
+      "lastAccessed": 1770907381757,
+      "type": "file"
+    },
+    {
+      "path": "vectorDB.js",
+      "accessCount": 4,
+      "lastAccessed": 1770825891262,
+      "type": "file"
+    },
+    {
+      "path": "services/position_manager.go",
+      "accessCount": 4,
+      "lastAccessed": 1770825915876,
+      "type": "file"
+    },
+    {
+      "path": "services/alpaca_data.go",
+      "accessCount": 4,
+      "lastAccessed": 1770828491747,
+      "type": "file"
+    },
+    {
+      "path": ".planning/codebase/ARCHITECTURE.md",
+      "accessCount": 4,
+      "lastAccessed": 1770829564487,
+      "type": "file"
+    },
+    {
+      "path": ".planning/PROJECT.md",
+      "accessCount": 4,
+      "lastAccessed": 1770829936765,
+      "type": "file"
+    },
+    {
+      "path": "controllers/activity_controller.go",
+      "accessCount": 4,
+      "lastAccessed": 1770829952792,
+      "type": "file"
+    },
+    {
+      "path": "services/gemini_service.go",
+      "accessCount": 3,
+      "lastAccessed": 1770825903889,
+      "type": "file"
+    },
+    {
+      "path": "services",
+      "accessCount": 3,
+      "lastAccessed": 1770825917280,
+      "type": "directory"
+    },
+    {
+      "path": ".env.example",
+      "accessCount": 3,
+      "lastAccessed": 1770827175980,
+      "type": "file"
+    },
+    {
+      "path": "controllers/position_controller.go",
+      "accessCount": 3,
+      "lastAccessed": 1770828415360,
+      "type": "file"
+    },
+    {
+      "path": ".planning/research/STACK.md",
+      "accessCount": 3,
+      "lastAccessed": 1770828691860,
+      "type": "file"
+    },
+    {
+      "path": ".planning/research/ARCHITECTURE.md",
+      "accessCount": 3,
+      "lastAccessed": 1770828692772,
+      "type": "file"
+    },
+    {
+      "path": ".planning/research/FEATURES.md",
+      "accessCount": 3,
+      "lastAccessed": 1770828870143,
+      "type": "file"
+    },
+    {
+      "path": ".planning/research/SUMMARY.md",
+      "accessCount": 3,
+      "lastAccessed": 1770829295828,
+      "type": "file"
+    },
+    {
+      "path": ".planning/REQUIREMENTS.md",
+      "accessCount": 3,
+      "lastAccessed": 1770829392589,
+      "type": "file"
+    },
+    {
+      "path": ".planning/codebase/STACK.md",
+      "accessCount": 3,
+      "lastAccessed": 1770829564007,
+      "type": "file"
+    },
+    {
+      "path": ".planning/codebase/CONCERNS.md",
+      "accessCount": 3,
+      "lastAccessed": 1770829565735,
+      "type": "file"
+    },
+    {
+      "path": ".claude/settings.local.json",
+      "accessCount": 2,
+      "lastAccessed": 1770827624351,
+      "type": "file"
+    },
+    {
+      "path": "autonomous_trading_prompt.txt",
+      "accessCount": 2,
+      "lastAccessed": 1770828191644,
+      "type": "file"
+    },
+    {
+      "path": "controllers/intelligence_controller.go",
+      "accessCount": 2,
+      "lastAccessed": 1770828401336,
+      "type": "file"
+    },
+    {
+      "path": "interfaces/options.go",
+      "accessCount": 2,
+      "lastAccessed": 1770828464130,
+      "type": "file"
+    },
+    {
+      "path": ".planning/research/PITFALLS.md",
+      "accessCount": 2,
+      "lastAccessed": 1770828693444,
+      "type": "file"
+    },
+    {
+      "path": ".planning/codebase/STRUCTURE.md",
+      "accessCount": 2,
+      "lastAccessed": 1770829564842,
+      "type": "file"
+    },
+    {
+      "path": ".planning/codebase/CONVENTIONS.md",
+      "accessCount": 2,
+      "lastAccessed": 1770829565284,
+      "type": "file"
+    },
+    {
+      "path": ".planning/codebase/INTEGRATIONS.md",
+      "accessCount": 2,
+      "lastAccessed": 1770829573828,
+      "type": "file"
+    },
+    {
+      "path": "services/news_service.go",
+      "accessCount": 1,
+      "lastAccessed": 1770825888397,
+      "type": "file"
+    },
+    {
+      "path": "backfill_embeddings.js",
+      "accessCount": 1,
+      "lastAccessed": 1770825893967,
+      "type": "file"
+    },
+    {
+      "path": "README.md",
+      "accessCount": 1,
+      "lastAccessed": 1770825910223,
+      "type": "file"
+    },
+    {
+      "path": "seed_data/load_seed_data.js",
+      "accessCount": 1,
+      "lastAccessed": 1770825915007,
+      "type": "file"
+    },
+    {
+      "path": ".planning/codebase/TESTING.md",
+      "accessCount": 1,
+      "lastAccessed": 1770825983902,
+      "type": "file"
+    },
+    {
+      "path": ".env",
+      "accessCount": 1,
+      "lastAccessed": 1770827187843,
+      "type": "file"
+    },
+    {
+      "path": "run_autonomous.sh",
+      "accessCount": 1,
+      "lastAccessed": 1770827343565,
+      "type": "file"
+    },
+    {
+      "path": ".mcp.json.example",
+      "accessCount": 1,
+      "lastAccessed": 1770827403895,
+      "type": "file"
+    },
+    {
+      "path": ".mcp.json",
+      "accessCount": 1,
+      "lastAccessed": 1770827408711,
+      "type": "file"
+    },
+    {
+      "path": "controllers/news_controller.go",
+      "accessCount": 1,
+      "lastAccessed": 1770828402165,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

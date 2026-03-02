@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-02-11T16:51:29.041Z",
+  "action": "BUY",
+  "symbol": "NVDA",
+  "reasoning": "NVDA showing strongest momentum of watchlist — V-bounce from $171.88 (Feb 5) to $191.03 today (+11.2% in 4 sessions). Recovering from early Feb selloff with high volume. Apr 17 $190C at delta 0.56, 65 DTE, tight 0.6% bid-ask spread. Position size ~$7,850 (7.8% of portfolio), well within 15% max. Clear thesis: NVDA momentum continuation toward Jan highs of $193.50. Stop at -15% ($13.35). Profit target +25-50% ($19.63-$23.55).",
+  "market_data": {
+    "nvda_price": 191.03,
+    "nvda_5day_low": 171.88,
+    "nvda_jan_high": 193.48,
+    "option": "NVDA260417C00190000",
+    "bid": 15.65,
+    "ask": 15.75,
+    "delta": 0.56,
+    "iv": 0.457,
+    "dte": 65,
+    "spread_pct": "0.6%",
+    "position_size_pct": "7.8%"
+  }
+}
